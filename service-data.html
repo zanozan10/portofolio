@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pengolahan Data | Fauzan Khoiril Anam</title>
+    <link
+      href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+      rel="icon"
+    />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --accent-color: #8b0000;
+        --heading-color: #45505b;
+        --default-color: #272829;
+      }
+      body {
+        color: var(--default-color);
+        font-family: "Roboto", sans-serif;
+      }
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: 0.3s;
+      }
+      a:hover {
+        color: #6b0000;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: var(--heading-color);
+        font-family: "Raleway", sans-serif;
+      }
+      .header {
+        background: #1a1a1a;
+        color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 300px;
+        padding: 20px;
+        z-index: 999;
+        overflow-y: auto;
+      }
+      @media (max-width: 1199px) {
+        .header {
+          left: -300px;
+        }
+        .header .header-toggle {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: var(--accent-color);
+          color: white;
+          font-size: 24px;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 9999;
+        }
+        .header.active {
+          left: 0;
+        }
+      }
+      .profile-img img {
+        margin: 15px auto;
+        display: block;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 8px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+      }
+      .header .sitename {
+        font-size: 22px;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+      }
+      .social-links {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .social-links a {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        margin: 0 5px;
+        transition: 0.3s;
+      }
+      .social-links a:hover {
+        background: var(--accent-color);
+        transform: translateY(-3px);
+      }
+      .navmenu ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 30px;
+      }
+      .navmenu li {
+        margin-bottom: 10px;
+      }
+      .navmenu a {
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 10px 15px;
+        font-size: 16px;
+        transition: 0.3s;
+        border-radius: 8px;
+      }
+      .navmenu a i {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+      .navmenu a:hover,
+      .navmenu .active {
+        color: white;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .main {
+        margin-left: 300px;
+      }
+      @media (max-width: 1199px) {
+        .main {
+          margin-left: 0;
+        }
+      }
+      .page-title {
+        background: linear-gradient(135deg, #1a0000, #4a0000, #8b0000);
+        color: white;
+        padding: 80px 0 40px;
+        text-align: center;
+      }
+      .page-title h1 {
+        color: white;
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .page-title p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+      }
+      .breadcrumbs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+      .breadcrumbs a {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .breadcrumbs a:hover {
+        color: white;
+      }
+      .section {
+        padding: 60px 0;
+      }
+      .service-hero {
+        background: #fde7e7;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .service-hero i {
+        font-size: 80px;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+      }
+      .service-hero h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--heading-color);
+      }
+      .service-hero p {
+        font-size: 16px;
+        color: #666;
+        margin-top: 10px;
+      }
+      .service-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+      }
+      .service-content h3 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--accent-color);
+      }
+      .feature-list {
+        list-style: none;
+        padding: 0;
+      }
+      .feature-list li {
+        padding: 10px 0;
+        font-size: 16px;
+      }
+      .feature-list li i {
+        color: var(--accent-color);
+        margin-right: 10px;
+        font-size: 18px;
+      }
+      .tech-badge {
+        display: inline-block;
+        background: #fde7e7;
+        color: var(--accent-color);
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 5px 5px 5px 0;
+      }
+      .process-step {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .process-step .step-number {
+        background: var(--accent-color);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        flex-shrink: 0;
+        margin-right: 15px;
+      }
+      .process-step .step-content h4 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .process-step .step-content p {
+        font-size: 15px;
+        color: #666;
+        margin: 0;
+      }
+      .btn-back {
+        display: inline-block;
+        background: var(--accent-color);
+        color: white;
+        padding: 12px 30px;
+        border-radius: 40px;
+        font-weight: 500;
+        transition: 0.3s;
+        margin-top: 20px;
+      }
+      .btn-back:hover {
+        background: #6b0000;
+        color: white;
+      }
+      .btn-back i {
+        margin-right: 8px;
+      }
+      .footer {
+        background: #f8f9fa;
+        padding: 20px 0;
+        text-align: center;
+        margin-top: 60px;
+      }
+      .scroll-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--accent-color);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 99;
+      }
+      #preloader {
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header" class="header d-flex flex-column">
+      <i class="header-toggle d-xl-none bi bi-list"></i>
+      <div class="profile-img">
+        <img
+          src="assets/img/foto-profil.jpg"
+          alt="Profile"
+          class="img-fluid rounded-circle"
+        />
+      </div>
+      <a
+        href="index.html"
+        class="logo d-flex align-items-center justify-content-center"
+      >
+        <h1 class="sitename">Fauzan Khoiril Anam</h1>
+      </a>
+      <div class="social-links text-center">
+        <a
+          href="https://instagram.com/zan_ozan10"
+          class="instagram"
+          target="_blank"
+          ><i class="bi bi-instagram"></i
+        ></a>
+        <a href="https://github.com/zanozan10" class="github" target="_blank"
+          ><i class="bi bi-github"></i
+        ></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        <a href="https://wa.me/6283825908020" class="whatsapp" target="_blank"
+          ><i class="bi bi-whatsapp"></i
+        ></a>
+      </div>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li>
+            <a href="index.html#hero"
+              ><i class="bi bi-house navicon"></i>Beranda</a
+            >
+          </li>
+          <li>
+            <a href="index.html#about"
+              ><i class="bi bi-person navicon"></i>Tentang</a
+            >
+          </li>
+          <li>
+            <a href="index.html#resume"
+              ><i class="bi bi-file-earmark-text navicon"></i>Riwayat</a
+            >
+          </li>
+          <li>
+            <a href="index.html#portfolio"
+              ><i class="bi bi-images navicon"></i>Portofolio</a
+            >
+          </li>
+          <li>
+            <a href="index.html#services" class="active"
+              ><i class="bi bi-hdd-stack navicon"></i>Layanan</a
+            >
+          </li>
+          <li>
+            <a href="index.html#contact"
+              ><i class="bi bi-envelope navicon"></i>Kontak</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <div class="page-title">
+        <div class="container">
+          <h1>Detail Layanan</h1>
+          <p>Pengolahan Data</p>
+          <div class="breadcrumbs">
+            <a href="index.html">Beranda</a><span>/</span>
+            <a href="index.html#services">Layanan</a><span>/</span>
+            <span>Pengolahan Data</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container" data-aos="fade-up">
+          <div class="service-hero">
+            <i class="bi bi-database"></i>
+            <h2>Pengolahan Data</h2>
+            <p>
+              Input, pengelolaan, dan pengolahan data menggunakan Microsoft
+              Office & MySQL.
+            </p>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="service-content">
+                <h3>Apa yang Saya Tawarkan?</h3>
+                <p>
+                  Saya membantu dalam input, pengelolaan, dan pengolahan data
+                  menggunakan Microsoft Office dan MySQL. Cocok untuk instansi,
+                  UMKM, atau perorangan yang butuh data rapi, akurat, dan
+                  terstruktur.
+                </p>
+
+                <h3 class="mt-4">Fitur yang Didapat</h3>
+                <ul class="feature-list">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Input data massal
+                    (Excel/Google Sheets)
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Validasi &
+                    pembersihan data
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Pengolahan data
+                    dengan rumus & pivot table
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Pembuatan laporan
+                    otomatis
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Import/export
+                    database MySQL
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Backup & dokumentasi
+                  </li>
+                </ul>
+
+                <h3 class="mt-4">Tools yang Digunakan</h3>
+                <div>
+                  <span class="tech-badge">Microsoft Excel</span>
+                  <span class="tech-badge">Microsoft Word</span>
+                  <span class="tech-badge">Google Sheets</span>
+                  <span class="tech-badge">MySQL</span>
+                  <span class="tech-badge">PHP</span>
+                </div>
+
+                <h3 class="mt-4">Proses Pengerjaan</h3>
+                <div class="process-step">
+                  <div class="step-number">1</div>
+                  <div class="step-content">
+                    <h4>Diskusi Kebutuhan</h4>
+                    <p>Menentukan jenis data dan output yang diinginkan.</p>
+                  </div>
+                </div>
+                <div class="process-step">
+                  <div class="step-number">2</div>
+                  <div class="step-content">
+                    <h4>Input & Validasi</h4>
+                    <p>Memasukkan data dan memastikan tidak ada kesalahan.</p>
+                  </div>
+                </div>
+                <div class="process-step">
+                  <div class="step-number">3</div>
+                  <div class="step-content">
+                    <h4>Pengolahan</h4>
+                    <p>Mengolah data dengan rumus, pivot, atau query SQL.</p>
+                  </div>
+                </div>
+                <div class="process-step">
+                  <div class="step-number">4</div>
+                  <div class="step-content">
+                    <h4>Penyerahan Hasil</h4>
+                    <p>Laporan final + file sumber siap pakai.</p>
+                  </div>
+                </div>
+
+                <a href="index.html#services" class="btn-back">
+                  <i class="bi bi-arrow-left"></i> Kembali ke Layanan
+                </a>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="service-content">
+                <h3>Info Singkat</h3>
+                <ul class="feature-list">
+                  <li><i class="bi bi-clock"></i> Durasi: 1-2 minggu</li>
+                  <li><i class="bi bi-cash"></i> Harga: Nego (per proyek)</li>
+                  <li><i class="bi bi-arrow-repeat"></i> Revisi: 2x gratis</li>
+                  <li><i class="bi bi-shield-check"></i> Garansi: 14 hari</li>
+                </ul>
+                <h3 class="mt-4">Cocok Untuk</h3>
+                <ul class="feature-list">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Instansi & Kantor
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> UMKM</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Laporan Keuangan
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> Data Survei</li>
+                </ul>
+                <a
+                  href="index.html#contact"
+                  class="btn-back"
+                  style="width: 100%; text-align: center"
+                >
+                  <i class="bi bi-chat-dots"></i> Diskusi Sekarang
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="copyright">
+          <p>
+            © <span>Copyright</span>
+            <strong class="px-1">Fauzan Khoiril Anam</strong>
+            <span>All Rights Reserved</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <a href="#" id="scroll-top" class="scroll-top"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+    <div id="preloader"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({ duration: 800, once: true });
+      document
+        .querySelector(".header-toggle")
+        ?.addEventListener("click", () => {
+          document.querySelector(".header").classList.toggle("active");
+        });
+      window.addEventListener("scroll", () => {
+        document.getElementById("scroll-top").style.display =
+          window.scrollY > 100 ? "flex" : "none";
+      });
+      document.getElementById("scroll-top").addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      window.addEventListener("load", () => {
+        document.getElementById("preloader")?.remove();
+      });
+    </script>
+  </body>
+</html>
